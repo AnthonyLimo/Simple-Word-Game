@@ -28,15 +28,16 @@ class MyApp extends StatelessWidget {
 
 class RandomSentences extends StatefulWidget {
   @override
-  createState() => new RandomSentencesState();
+  createState() => new _RandomSentencesState();
 }
 
 
 //RandomSentenceState allows us to make changes to the content in the RandomSentences
 //stateful widget
-class RandomSentencesState extends State<RandomSentences> {
+class _RandomSentencesState extends State<RandomSentences> {
 
   final _sentences = <String>[];
+  final _funnies = Set<String>();
   final _biggerFont = const TextStyle(fontSize: 14.0); //Provide styling as predefined contexts
 
   @override
@@ -61,11 +62,26 @@ class RandomSentencesState extends State<RandomSentences> {
   }
 
   Widget _buildRow (String sentence) {
+    final alreadyFoundFunny = _funnies.contains(sentence);
+
     return new ListTile(
       title: new Text(
         sentence,
         style: _biggerFont,
       ),
+      trailing: new Icon(
+        alreadyFoundFunny ? Icons.thumb_up : Icons.thumb_down,
+        color: alreadyFoundFunny ? Colors.green : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadyFoundFunny) {
+            _funnies.remove(sentence);
+          } else {
+            _funnies.add(sentence);
+          }
+        });
+      },
     );
   }
 
