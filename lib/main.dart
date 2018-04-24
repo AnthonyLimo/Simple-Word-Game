@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         ),
         body: new Center(
           child: new Text(
-              'Noun: '),
+              'Noun: ${noun.asCapitalized}'),
         ),
       ),
     );
